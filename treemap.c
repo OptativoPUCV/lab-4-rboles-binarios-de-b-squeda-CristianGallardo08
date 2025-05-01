@@ -158,7 +158,26 @@ Pair *searchTreeMap(TreeMap *tree, void *key)
 
 Pair *upperBound(TreeMap *tree, void *key)
 {
-    return NULL;
+    TreeNode *current = tree->root;
+    TreeNode *candidato = NULL;
+
+    while (current != NULL)
+    {
+        if (is_equal(tree, key, current->pair->key))
+            return current->pair;
+
+        if (tree->lower_than(key, current->pair->key))
+        {
+            candidato = current;
+            current = current->left;
+        }
+        else
+        {
+            current = current->right;
+        }
+    }
+
+    return (candidato != NULL) ? candidato->pair : NULL;
 }
 
 Pair *firstTreeMap(TreeMap *tree)
